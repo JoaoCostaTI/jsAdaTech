@@ -1,0 +1,3 @@
+Nome: Joao Costa
+Idade: 31
+Altura: 1.76 
