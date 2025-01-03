@@ -29,21 +29,47 @@ const fs = require('fs')
 
 console.log('ANTES')
 
-const promessa = new Promise((resolve, reject) => {
-    fs.readFile("arquivo.txt", (erro, conteudoDoArquivo) => {
-    if(erro){
-        reject("Ocorreu um erro ao tentar ler o arquivo", erro)
-    }else{
-        resolve(String(conteudoDoArquivo))
-    }
-})
-}) // criando uma promessa
+function lerArquivoPromise(){
+    return new Promise((resolve, reject) => {
+        fs.readFile("arquivo.txt", (erro, conteudoDoArquivo) => {
+        if(erro){
+            reject("Ocorreu um erro ao tentar ler o arquivo", erro)
+        }else{
+            resolve(String(conteudoDoArquivo))
+        }
+    })
+    }) 
+}
 
-promessa
-.then((retornoDoResolveDarPromise) => {
-    console.log('Deu certo: ', retornoDoResolveDarPromise)
-}).catch((erro) => {
-    console.log('Deu ruim:', erro)
-}).finally(() => {
-    console.log('Isso será SEMPRE EXECUTADO no final dela.')
-})
+// criando uma promessa
+
+// lerArquivoPromise()
+
+// .then((retornoDoResolveDarPromise) => {
+//     console.log('Deu certo: ', retornoDoResolveDarPromise)
+// }).catch((erro) => {
+//     console.log('Deu ruim:', erro)
+// }).finally(() => {
+//     console.log('Isso será SEMPRE EXECUTADO no final dela.')
+// })
+
+// ASYNC/AWAIT
+
+async function leituraDeDados(){
+    console.log('ANTES da Promise ser resolvida')
+
+    try{
+        const dadosDoArquivoLido = await lerArquivoPromise()
+
+        console.log(dadosDoArquivoLido)
+    
+        console.log('DEPOIS da Promise ser resolvida')
+    }catch(err){
+        console.log(err)
+        console.log('Isso é quando der ERRO')
+    } finally{
+        console.log('Dentro do FINALLY')
+    }
+}
+
+leituraDeDados()
